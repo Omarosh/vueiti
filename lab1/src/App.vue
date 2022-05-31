@@ -11,8 +11,8 @@ import TheWelcome from './components/TheWelcome.vue'
     <button @click="choice = 3">Admins</button>
     <div class="data" >
       <formVue  @student="addStudent" @admin="addAdmin" v-if="choice == 1" />
-      <studentsVue v-if="choice == 2" :students="students" />
-      <adminsVue v-if="choice == 3" />
+      <studentsVue v-if="choice == 2" :students="students" @delete="handleDeleteStudent" />
+      <adminsVue v-if="choice == 3" @delete="handleDeleteAdmin" />
     </div>
   </div>
   {{students}}
@@ -40,8 +40,15 @@ export default {
     },
     addAdmin(admin) {
       this.admins.push(admin)
+    },
+    handleDeleteStudent(index) {
+      this.students.splice(index,1)
+    },
+    handleDeleteAdmin(index) {
+      this.admins.splice(index,1)
     }
-  }
+  },
+  provide(){return {admins:this.admins}} 
 }
 
 </script>
